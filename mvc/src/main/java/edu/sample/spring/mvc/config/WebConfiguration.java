@@ -26,7 +26,7 @@ import edu.sample.spring.mvc.handler.interceptor.AMeasurementInterceptor;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan("edu.sample.spring.mvc")
+@ComponentScan("edu.sample.spring.mvc.controller")
 // WebMvcConfigurerAdapter is use to register handler interceptor
 public class WebConfiguration extends WebMvcConfigurerAdapter {
 	

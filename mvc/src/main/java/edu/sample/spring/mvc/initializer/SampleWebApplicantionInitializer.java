@@ -2,6 +2,7 @@ package edu.sample.spring.mvc.initializer;
 
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
+import edu.sample.spring.mvc.config.ServiceConfiguration;
 import edu.sample.spring.mvc.config.WebConfiguration;
 
 /**
@@ -19,13 +20,12 @@ public class SampleWebApplicantionInitializer extends AbstractAnnotationConfigDi
 	 */
 	@Override
 	protected Class<?>[] getRootConfigClasses() {
-		// TODO Auto-generated method stub
-		return null;
+		return new Class<?>[] { ServiceConfiguration.class };
 	}
 
 	@Override
 	protected Class<?>[] getServletConfigClasses() {
-		return new Class<?>[] {WebConfiguration.class};
+		return new Class<?>[] { WebConfiguration.class };
 	}
 
 	@Override
