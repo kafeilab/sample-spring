@@ -23,7 +23,8 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.ResourceBundleViewResolver;
 
 import edu.sample.spring.mvc.exception.ReservationNotAvailableException;
-import edu.sample.spring.mvc.handler.interceptor.AMeasurementInterceptor;
+import edu.sample.spring.mvc.handler.interceptor.ExtensionInterceptor;
+import edu.sample.spring.mvc.handler.interceptor.IMeasurementInterceptor;
 
 @Configuration
 @EnableWebMvc
@@ -53,16 +54,6 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
 		return viewResolver;
 	}
 	
-	@Override
-	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(measurementInterceptor());
-	}
-	
-	@Bean
-	public AMeasurementInterceptor measurementInterceptor() {
-		return new AMeasurementInterceptor();
-	}
-	
 	/*
 	 * ResourceBundleViewResolver has the capability of resolving view for
 	 * different locale
@@ -70,10 +61,18 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
 	 * from the root of the classpath
 	 */
 	@Bean
-	public ViewResolver viewResolver() {
+	public ViewResolver excelViewResolver() {
 		ResourceBundleViewResolver viewResolver = new ResourceBundleViewResolver();
 		viewResolver.setOrder(1);
-		viewResolver.setBasenames("excel-views", "pdf-views");
+		viewResolver.setBasename("excel-views");
+		return viewResolver;
+	}
+	
+	@Bean
+	public ViewResolver pdfViewResolver() {
+		ResourceBundleViewResolver viewResolver = new ResourceBundleViewResolver();
+		viewResolver.setOrder(1);
+		viewResolver.setBasename("pdf-views");
 		return viewResolver;
 	}
 	
@@ -87,6 +86,29 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
 		resolver.setPrefix("/WEB-INF/jsp/");
 		resolver.setSuffix(".jsp");
 		return resolver;
+	}
+	
+	/*
+	 * -----------------------------------------------
+	 * Intercepting Requests with Handler Interceptors
+	 * -----------------------------------------------
+	 */
+	
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+		registry.addInterceptor(measurementInterceptor());
+		registry.addInterceptor(extensionInterceptor());
+	}
+	
+	@Bean
+	public IMeasurementInterceptor measurementInterceptor() {
+//		return new AMeasurementInterceptor();
+		return new IMeasurementInterceptor();
+	}
+	
+	@Bean
+	public ExtensionInterceptor extensionInterceptor() {
+		return new ExtensionInterceptor();
 	}
 	
 	/* 
