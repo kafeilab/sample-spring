@@ -20,6 +20,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
 import org.springframework.web.servlet.view.ContentNegotiatingViewResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
+import org.springframework.web.servlet.view.ResourceBundleViewResolver;
 
 import edu.sample.spring.mvc.exception.ReservationNotAvailableException;
 import edu.sample.spring.mvc.handler.interceptor.AMeasurementInterceptor;
@@ -37,8 +38,8 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
 	public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
 		Map<String, MediaType> mediaTypes = new HashMap<String, MediaType>();
 		mediaTypes.put("html", MediaType.TEXT_HTML);
-//		mediaTypes.put("pdf", new MediaType("application/pdf"));
-//		mediaTypes.put("xls", new MediaType("application/vnd.ms-excel"));
+		mediaTypes.put("pdf", MediaType.parseMediaType("application/pdf"));
+		mediaTypes.put("xls", MediaType.parseMediaType("application/vnd.ms-excel"));
 		mediaTypes.put("xml", MediaType.TEXT_XML);
 		mediaTypes.put("json", MediaType.APPLICATION_JSON);
 		configurer.mediaTypes(mediaTypes);
@@ -47,6 +48,7 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
 	@Bean
 	public ContentNegotiatingViewResolver contentNegotiatingViewResolver() {
 		ContentNegotiatingViewResolver viewResolver = new ContentNegotiatingViewResolver();
+		viewResolver.setOrder(0);
 		viewResolver.setContentNegotiationManager(contentNegotiationManager);
 		return viewResolver;
 	}
@@ -61,9 +63,27 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
 		return new AMeasurementInterceptor();
 	}
 	
+	/*
+	 * ResourceBundleViewResolver has the capability of resolving view for
+	 * different locale
+	 * setBasename() or setBasenames() for the properties files which loads
+	 * from the root of the classpath
+	 */
+	@Bean
+	public ViewResolver viewResolver() {
+		ResourceBundleViewResolver viewResolver = new ResourceBundleViewResolver();
+		viewResolver.setOrder(1);
+		viewResolver.setBasenames("excel-views", "pdf-views");
+		return viewResolver;
+	}
+	
+	/*
+	 * InternalResourceViewResolver always resolves so set the lowest order
+	 */
 	@Bean
 	public ViewResolver internalResourceViewResolver() {
 		InternalResourceViewResolver resolver = new InternalResourceViewResolver();
+		resolver.setOrder(2);
 		resolver.setPrefix("/WEB-INF/jsp/");
 		resolver.setSuffix(".jsp");
 		return resolver;

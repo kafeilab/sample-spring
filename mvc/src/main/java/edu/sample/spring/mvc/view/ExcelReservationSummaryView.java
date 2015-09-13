@@ -1,3 +1,15 @@
+/*
+ * ----------------------------------------------------------------------------
+ * Creating Excel Views
+ * 
+ * Spring provides AbstractExcelView for Apache POI and AbstractJExcelView for
+ * JExcelAPI
+ * 
+ * Note:
+ * need to create resolvers for excel view.
+ * This example uses resource bundle.
+ * ----------------------------------------------------------------------------
+ */
 package edu.sample.spring.mvc.view;
 
 import java.text.DateFormat;
@@ -23,12 +35,12 @@ public class ExcelReservationSummaryView extends AbstractExcelView {
 		Reservation reservation = (Reservation) model.get("reservation");
 		DateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
 		HSSFSheet sheet = workbook.createSheet();
-		
+
 		HSSFRow header = sheet.createRow(0);
 		header.createCell(0).setCellValue("Court name");
 		header.createCell(1).setCellValue("Date");
 		header.createCell(2).setCellValue("Hour");
-		
+
 		HSSFRow row = sheet.createRow(1);
 		row.createCell(0).setCellValue(reservation.getCourtName());
 		row.createCell(1).setCellValue(df.format(reservation.getDate()));

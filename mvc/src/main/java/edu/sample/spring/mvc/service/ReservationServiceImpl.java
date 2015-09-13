@@ -30,6 +30,7 @@ public class ReservationServiceImpl implements ReservationService {
 			reservation.setCourtName("Court name " + i);
 			reservation.setDate(new Date());
 			reservation.setHour(i);
+			samples.add(reservation);
 		}
 		return samples;
 	}
