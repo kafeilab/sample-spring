@@ -1,0 +1,12 @@
+Spring MVC
+
+Spring provides the following view resolver:
+
+- InternalResourceViewResolver: resolving views based on a template's name and location.
+- XmlViewResolver: resolving views from an XML configuration file.
+- ResourceBundleViewResolver: resolvng views from a resource bundle.
+- BeanNameViewResolver:resolving view from a bean name.
+
+- ContentNegotiationViewResolver: 
+        - does not resolving views themselves, but delegates them to other
+        view resolvers (automatically detects).
