@@ -1,4 +1,6 @@
-Spring MVC
+----------------------------------------------------------------------------------------------------
+                    Spring MVC
+----------------------------------------------------------------------------------------------------
 
 Spring provides the following view resolver:
 
@@ -10,3 +12,11 @@ Spring provides the following view resolver:
 - ContentNegotiationViewResolver: 
         - does not resolving views themselves, but delegates them to other
         view resolvers (automatically detects).
+
+----------------------------------------------------------------------------------------------------
+                    Spring REST
+----------------------------------------------------------------------------------------------------
+
+Rest with XML payload
+
+- Using a MarshallingView to produce XML
