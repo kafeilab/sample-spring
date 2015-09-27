@@ -12,6 +12,7 @@ import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.view.BeanNameViewResolver;
+import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 import org.springframework.web.servlet.view.xml.MarshallingView;
 
 /**
@@ -22,11 +23,13 @@ import org.springframework.web.servlet.view.xml.MarshallingView;
 @ComponentScan(basePackages = "edu.sample.spring.rest.controller")
 public class CourtRestConfiguration {
 
+    // ------------------------------------------
+    //      XML
+
     /*
      * The membertemplate view is defined as a MarshallingView
      * which, here, rederer using a marshaller
      */
-
     @Bean
     public View membertemplate() {
         return new MarshallingView(jaxb2Marshaller());
@@ -55,6 +58,16 @@ public class CourtRestConfiguration {
     @Bean
     public MemberService memberService() {
         return new MemberService();
+    }
+
+    // ------------------------------------------------
+    //     JSON
+
+    @Bean
+    public View jsonmembertemplate() {
+        MappingJackson2JsonView view = new MappingJackson2JsonView();
+        view.setPrettyPrint(true);
+        return view;
     }
 
 }

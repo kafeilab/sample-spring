@@ -1,0 +1,11 @@
+======================================================================== [ Spring security summary ]
+Secure a web application at the:
+- URL access level
+- The method invocation level
+- The view rendering level
+- The domain object level
+
+[ --- DelegatingFilterProxy --- ]
+
+    You have to register a "DelegatingFilterProxy" instance in the web deployment descriptor, which
+is a servlet filter that delegates request filtering to a filter in Spring's application contect.

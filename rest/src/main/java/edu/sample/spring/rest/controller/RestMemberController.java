@@ -6,6 +6,7 @@ import edu.sample.spring.rest.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,8 +34,16 @@ public class RestMemberController {
      * In this case, the wildcard does not have any influent, but it will match,
      * for example: /members/Jonh+Smith/353 => for member with id 353
      */
-    @RequestMapping("/members")
-    public String getRestMembers(Model model) {
+    @RequestMapping(value = "/members", produces = MediaType.APPLICATION_ATOM_XML_VALUE)
+    public String getRestMembersXml(Model model) {
+        Members members = new Members();    // TODO use service
+
+        model.addAttribute("members", members);
+        return "membertemplate";
+    }
+
+    @RequestMapping(value = "/members", produces = MediaType.APPLICATION_JSON_VALUE)
+    public String getRestMembersJson(Model model) {
         Members members = new Members();    // TODO use service
 
         model.addAttribute("members", members);
